@@ -13,6 +13,7 @@ from kflight.conditions import PropertyCondition, FunctionCondition
 __all__ = ("Flight",)
 
 from kflight.event_handler import EventHandler, Priority
+from kflight.sync import add_running_flight
 
 from kflight.throttle_control import ThrottleControl
 
@@ -198,6 +199,9 @@ class Flight(EventHandler, ThrottleControl):
         self._detach = detach
 
         self._register_callbacks()
+
+        # Register to sync
+        add_running_flight(self)
 
         # Skip entry if detach
         if detach:
